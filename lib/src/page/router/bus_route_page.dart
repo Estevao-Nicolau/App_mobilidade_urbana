@@ -12,41 +12,14 @@ class Bus_Route_Page extends StatefulWidget {
 }
 
 class _Bus_Route_PageState extends State<Bus_Route_Page> {
-  Future<List> searchSenseLine() async {
-    var url = Uri.parse(  // /Login/Autenticar?token=7ce4e7970868de4bcfb1fe664664b9def6613a4eb8abdc4e840ff193249fafe4'
-        'http://api.olhovivo.sptrans.com.br/v2.1/Linha/Buscar?termosBusca=8000');
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      return jsonDecode(utf8.decode(response.bodyBytes));
-    } else {
-      throw Exception('Erro ao carregar API');
-    }
-  }
-
-  List<String> categories = [
-    'Posição do veiculo ',
-    'Linhas',
-    'Paradas',
-    'Previsão de chegada',
-    'Bilhete Único',
-  ];
-  final List<String> busNames = [
-    'Bus01',
-    'Bus02',
-    'Bus03',
-    'Bus05',
-    'Bus08',
-    'Bus13',
-    'Bus21',
-    'Bus34',
-    'Bus55'
-  ];
-  String selectedCategory = 'Paradas';
+  
+ 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: searchSenseLine(),
+          // future: searchSenseLine(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Center(
@@ -66,7 +39,7 @@ class _Bus_Route_PageState extends State<Bus_Route_Page> {
                       height: MediaQuery.of(context).size.height * 0.20,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.length,
+                          itemCount: busNames.length,
                           itemBuilder: (context, index) {
                             return SizedBox(
                               width: MediaQuery.of(context).size.width * 0.6,
@@ -74,7 +47,7 @@ class _Bus_Route_PageState extends State<Bus_Route_Page> {
                                 color: Colors.blue,
                                 child: Center(
                                   child: Text(
-                                    snapshot.data?[index]['tp'],
+                                    categories[index],
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 36.0),
                                   ),
@@ -118,3 +91,23 @@ class _Bus_Route_PageState extends State<Bus_Route_Page> {
     );
   }
 }
+
+List<String> categories = [
+    'Posição do veiculo ',
+    'Linhas',
+    'Paradas',
+    'Previsão de chegada',
+    'Bilhete Único',
+  ];
+  final List<String> busNames = [
+    'Bus01',
+    'Bus02',
+    'Bus03',
+    'Bus05',
+    'Bus08',
+    'Bus13',
+    'Bus21',
+    'Bus34',
+    'Bus55'
+  ];
+  String selectedCategory = 'Paradas';
